@@ -7,9 +7,18 @@ log errors in Python.
 import logging as _logging
 
 from ._errors import Error, chain_errors
+from ._result import Err, LazyResult, Ok, Result, return_lazy_result
 
 
-__all__ = ["Error", "chain_errors"]
+__all__ = [
+    "Err",
+    "Error",
+    "LazyResult",
+    "Ok",
+    "Result",
+    "chain_errors",
+    "return_lazy_result",
+]
 
 __author__ = "Bryan M Bugyi"
 __email__ = "bryanbugyi34@gmail.com"
