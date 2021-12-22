@@ -18,8 +18,8 @@ from setuptools import find_namespace_packages, setup
 # Configuration variables that are likely to need changing at some point.
 ###############################################################################
 DESCRIPTION = (
-    "The Greek Goddess of Strife and Discord... Error-handling at its finest:"
-    " the better way to handle, trace, and log errors."
+    "The Greek Goddess of Strife and Discord... The better way to handle,"
+    " trace, and log errors."
 )
 SUPPORTED_PYTHON_VERSIONS = [
     (3, 8),

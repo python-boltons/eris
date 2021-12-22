@@ -1,6 +1,6 @@
 # eris
 
-**The Greek Goddess of Strife and Discord... Error-handling at its finest: the better way to handle, trace, and log errors.**
+**The Greek Goddess of Strife and Discord... The better way to handle, trace, and log errors.**
 
 _project status badges:_
 

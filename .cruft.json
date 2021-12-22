@@ -12,7 +12,7 @@
       "package_name": "eris",
       "pypi_package_name": "bolton-eris",
       "read_the_docs_domain": "bolton-eris",
-      "package_description": "The Greek Goddess of Strife and Discord... Error-handling at its finest: the better way to handle, trace, and log errors.",
+      "package_description": "The Greek Goddess of Strife and Discord... The better way to handle, trace, and log errors.",
       "package_type": "library",
       "_template": "https://github.com/bbugyi200/cc-python",
       "package_path": "eris",
