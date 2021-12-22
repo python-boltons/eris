@@ -1,7 +1,7 @@
 """eris package
 
 The Greek Goddess of Strife and Discord... The better way to handle, trace, and
-log errors.
+log errors in Python.
 """
 
 import logging as _logging

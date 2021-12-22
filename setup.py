@@ -19,7 +19,7 @@ from setuptools import find_namespace_packages, setup
 ###############################################################################
 DESCRIPTION = (
     "The Greek Goddess of Strife and Discord... The better way to handle,"
-    " trace, and log errors."
+    " trace, and log errors in Python."
 )
 SUPPORTED_PYTHON_VERSIONS = [
     (3, 8),
