@@ -2,6 +2,8 @@
 
 from typing import Iterator, Optional
 
+from ion import efill
+from metaman import Inspector
 from typist import E
 
 
@@ -11,7 +13,6 @@ class Error(Exception):
     def __init__(
         self, emsg: str, cause: Exception = None, up: int = 0
     ) -> None:
-        from metaman import Inspector
 
         chain_errors(self, cause)
         self.inspector = Inspector(up=up + 1)
@@ -28,7 +29,6 @@ class Error(Exception):
         Format error to width.  If width is None, return string suitable for
         traceback.
         """
-        from ion import efill
         from metaman import cname
 
         super_str = super().__str__()
