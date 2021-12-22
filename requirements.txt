@@ -4,3 +4,7 @@
 #
 #    "make update-requirements"
 #
+bolton-metaman==0.1.0
+    # via -r requirements.in
+bolton-typist==0.1.0
+    # via -r requirements.in

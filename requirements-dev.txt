@@ -24,6 +24,14 @@ binaryornot==0.4.4
     # via cookiecutter
 black==21.12b0
     # via -r requirements-dev.in
+bolton-metaman==0.1.0
+    # via
+    #   -r requirements.in
+    #   bolton-eris
+bolton-typist==0.1.0
+    # via
+    #   -r requirements.in
+    #   bolton-eris
 bump2version==1.0.1
     # via -r requirements-dev.in
 certifi==2021.10.8
@@ -220,8 +228,6 @@ tox==3.24.4
     #   -r requirements-dev.in
     #   tox-pyenv
 tox-pyenv==1.1.0
-    # via -r requirements-dev.in
-typeguard==2.13.3
     # via -r requirements-dev.in
 typer==0.4.0
     # via cruft
