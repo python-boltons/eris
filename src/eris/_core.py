@@ -5,8 +5,3 @@ module to add it to.
 """
 
 from __future__ import annotations
-
-
-def dummy(x: int, y: int) -> int:
-    """Dummy function."""
-    return x + y
