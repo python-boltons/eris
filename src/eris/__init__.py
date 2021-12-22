@@ -6,10 +6,10 @@ log errors in Python.
 
 import logging as _logging
 
-from ._core import dummy
+from ._errors import Error, chain_errors
 
 
-__all__ = ["dummy"]
+__all__ = ["Error", "chain_errors"]
 
 __author__ = "Bryan M Bugyi"
 __email__ = "bryanbugyi34@gmail.com"

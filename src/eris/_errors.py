@@ -1,9 +1,11 @@
 """Custom Exceptions live here."""
 
+from __future__ import annotations
+
 from typing import Iterator, Optional
 
 from ion import efill
-from metaman import Inspector
+from metaman import Inspector, cname
 from typist import E
 
 
@@ -29,8 +31,6 @@ class Error(Exception):
         Format error to width.  If width is None, return string suitable for
         traceback.
         """
-        from metaman import cname
-
         super_str = super().__str__()
 
         emsg = efill(super_str, width, indent=2)
