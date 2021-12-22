@@ -13,8 +13,8 @@ _version badges:_
 
 [![Project Version](https://img.shields.io/pypi/v/bolton-eris)](https://pypi.org/project/bolton-eris/)
 [![Python Versions](https://img.shields.io/pypi/pyversions/bolton-eris)](https://pypi.org/project/bolton-eris/)
-[![Cookiecutter: cc-python](https://img.shields.io/static/v1?label=cc-python&message=2021.12.20&color=d4aa00&logo=cookiecutter&logoColor=d4aa00)](https://github.com/bbugyi200/cc-python)
-[![Docker: bbugyi/python](https://img.shields.io/static/v1?label=bbugyi%20%2F%20python&message=2021.12.20&color=8ec4ad&logo=docker&logoColor=8ec4ad)](https://github.com/bbugyi200/docker-python)
+[![Cookiecutter: cc-python](https://img.shields.io/static/v1?label=cc-python&message=2021.12.22&color=d4aa00&logo=cookiecutter&logoColor=d4aa00)](https://github.com/python-boltons/cc-python)
+[![Docker: pythonboltons/main](https://img.shields.io/static/v1?label=pythonboltons%20%2F%20main&message=2021.12.22&color=8ec4ad&logo=docker&logoColor=8ec4ad)](https://github.com/python-boltons/docker-python)
 
 
 ## Installation 🗹
@@ -48,7 +48,7 @@ you through the process.
 [1]: https://bolton-eris.readthedocs.io/en/latest
 [2]: https://github.com/python-boltons/eris/blob/master/CHANGELOG.md
 [3]: https://bolton-eris.readthedocs.io/en/latest/modules.html
-[4]: https://github.com/bbugyi200/cc-python
+[4]: https://github.com/python-boltons/cc-python
 [5]: https://github.com/cookiecutter/cookiecutter
 [6]: https://docs.readthedocs.io/en/stable/
 [7]: https://github.com/python-boltons/eris/blob/master/CONTRIBUTING.md

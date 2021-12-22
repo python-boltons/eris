@@ -1,6 +1,6 @@
 {
   "template": "https://github.com/python-boltons/cc-python",
-  "commit": "4c6bffc12333094d332eaf1a61bda227b65322c4",
+  "commit": "d93c9f24d9b2ed7b05e18da95ffc3086e540e721",
   "checkout": null,
   "context": {
     "cookiecutter": {
@@ -14,7 +14,7 @@
       "read_the_docs_domain": "bolton-eris",
       "package_description": "The Greek Goddess of Strife and Discord... The better way to handle, trace, and log errors in Python.",
       "package_type": "library",
-      "_template": "https://github.com/bbugyi200/cc-python",
+      "_template": "https://github.com/python-boltons/cc-python",
       "package_path": "eris",
       "package_module": "eris"
     }

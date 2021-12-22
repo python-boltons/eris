@@ -5,7 +5,6 @@ pytest-mock
 syrupy
 tox
 tox-pyenv
-typeguard
 -e file:.#egg=bolton-eris>=0.dev
 
 ### Lint
