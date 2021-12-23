@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from eris import Err, ErisError
+from eris import ErisError, Err
 
 
 def test_err_method() -> None:
