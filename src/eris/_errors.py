@@ -64,10 +64,10 @@ class Error(Exception):
         self.inspector = Inspector(up=up + 1)
         super().__init__(emsg)
 
-    def __str__(self) -> str:
+    def __str__(self) -> str:  # noqa: D105
         return self.__repr__()
 
-    def __repr__(self) -> str:
+    def __repr__(self) -> str:  # noqa: D105
         return self._repr()
 
     def _repr(self, width: int = 80) -> str:
@@ -86,7 +86,7 @@ class Error(Exception):
             emsg,
         )
 
-    def __iter__(self) -> Iterator["BaseException"]:
+    def __iter__(self) -> Iterator["BaseException"]:  # noqa: D105
         yield self
 
         e = self.__cause__

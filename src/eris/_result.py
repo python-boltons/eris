@@ -72,7 +72,7 @@ Examples:
 """
 
 from abc import ABC, abstractmethod
-from dataclasses import dataclass, field
+from dataclasses import InitVar, dataclass, field
 from functools import wraps
 from typing import (
     Any,
@@ -139,12 +139,15 @@ class Err:
     error.
     """
 
-    _error_msg: str
+    _error_or_string: InitVar[Union[str, Error]]
     _error: Error = field(init=False)
 
-    def __post_init__(self) -> None:
+    def __post_init__(self, error_or_string: Union[str, Error]) -> None:
         """Set the `_error` attribute."""
-        self._error = Error(self._error_msg, up=2)
+        if isinstance(error_or_string, str):
+            self._error = Error(error_or_string, up=2)
+        else:
+            self._error = error_or_string
 
     def err(self) -> Error:  # noqa: D102
         return self._error
