@@ -1,0 +1,138 @@
+# name: test_is_json__NO_CAUSE
+  <class 'list'> [
+    <class 'dict'> {
+      'caused_by': <class 'list'> [
+      ],
+      'exc_info': <class 'dict'> {
+        'exc_msg': 'Something went wrong...',
+        'exc_type': "<class 'eris._errors.ErisError'>",
+        'exc_value': '
+          ErisError::tests.test_eris::test_is_json__NO_CAUSE::33{
+            Something went wrong...
+          }
+        ',
+      },
+      'file_name': '/eris/tests/test_eris.py',
+      'func_name': 'test_is_json__NO_CAUSE',
+      'lineno': 33,
+      'module_name': 'tests.test_eris',
+      'stack': <class 'list'> [
+        ' ',
+        ' ',
+        ' ',
+        ' ',
+        'e',
+        'r',
+        'r',
+        ' ',
+        '=',
+        ' ',
+        'E',
+        'r',
+        'r',
+        '(',
+        'E',
+        'R',
+        'R',
+        'O',
+        'R',
+        '_',
+        'M',
+        'S',
+        'G',
+        ')',
+        '
+          
+  
+        ',
+      ],
+    },
+  ]
+---
+# name: test_is_json__ONE_CAUSE
+  <class 'list'> [
+    <class 'dict'> {
+      'caused_by': <class 'list'> [
+        <class 'tuple'> (
+          "<class 'ZeroDivisionError'>",
+          'division by zero',
+          'division by zero',
+        ),
+      ],
+      'exc_info': <class 'dict'> {
+        'exc_msg': 'Something went wrong...',
+        'exc_type': "<class 'eris._errors.ErisError'>",
+        'exc_value': '
+          ErisError::tests.test_eris::test_is_json__ONE_CAUSE::47{
+            Something went wrong...
+          }
+        ',
+      },
+      'file_name': '/eris/tests/test_eris.py',
+      'func_name': 'test_is_json__ONE_CAUSE',
+      'lineno': 47,
+      'module_name': 'tests.test_eris',
+      'stack': <class 'list'> [
+        ' ',
+        ' ',
+        ' ',
+        ' ',
+        ' ',
+        ' ',
+        ' ',
+        ' ',
+        'e',
+        'r',
+        'r',
+        ' ',
+        '=',
+        ' ',
+        'E',
+        'r',
+        'r',
+        '(',
+        'E',
+        'R',
+        'R',
+        'O',
+        'R',
+        '_',
+        'M',
+        'S',
+        'G',
+        ')',
+        '.',
+        'c',
+        'h',
+        'a',
+        'i',
+        'n',
+        '(',
+        'z',
+        'e',
+        'r',
+        'o',
+        '_',
+        'd',
+        'i',
+        'v',
+        '_',
+        'e',
+        'r',
+        'r',
+        'o',
+        'r',
+        ')',
+        '
+          
+  
+        ',
+        '
+            File "/eris/tests/test_eris.py", line 44, in test_is_json__ONE_CAUSE
+              x = 1 / 0
+  
+        ',
+      ],
+    },
+  ]
+---

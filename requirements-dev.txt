@@ -28,11 +28,11 @@ bolton-ion==0.1.0
     # via
     #   -r requirements.in
     #   bolton-eris
-bolton-metaman==0.1.0
+bolton-metaman==0.1.1
     # via
     #   -r requirements.in
     #   bolton-eris
-bolton-typist==0.1.0
+bolton-typist==0.1.1
     # via
     #   -r requirements.in
     #   bolton-eris

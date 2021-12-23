@@ -28,7 +28,7 @@ FIRST_EXC_IS_WRONG_TYPE: Final = (
     "Logic error. The first exception returned by iterating over this"
     " exception should be THIS exception."
 )
-NULL: Final = "null"
+NULL: Final[Null] = "null"
 
 
 class ExcInfo(TypedDict):
@@ -50,10 +50,9 @@ class ErisErrorDict(TypedDict):
     module_name: str
     func_name: str
     file_name: str
-    lines: List[str]
 
     # optional traceback stack + exception that caused it
-    stack: Nullable[List[str]]
+    stack: List[str]
     caused_by: Nullable[List[ExcInfoTuple]]
 
 
@@ -114,7 +113,7 @@ class ErisError(Exception):
         for error in self:
             if isinstance(error, ErisError):
                 caused_by = last_caused_by = []
-                stack = last_stack = []
+                stack = last_stack = list(error.inspector.lines)
 
                 exc_info: ExcInfo = dict(
                     exc_type=str(type(error)),
@@ -127,8 +126,6 @@ class ErisError(Exception):
                     module_name=error.inspector.module_name,
                     func_name=error.inspector.function_name,
                     file_name=error.inspector.file_name,
-                    # lines=error.inspector.lines,
-                    lines=[],
                     stack=stack,
                     caused_by=caused_by,
                 )
@@ -137,6 +134,8 @@ class ErisError(Exception):
                 assert last_stack is not None, FIRST_EXC_IS_WRONG_TYPE
                 assert last_caused_by is not None, FIRST_EXC_IS_WRONG_TYPE
 
+                # extend the last Error's 'caused_by' list with this
+                # Exception's info...
                 exc_info_tuple: ExcInfoTuple = (
                     str(type(error)),
                     str(error),
@@ -144,6 +143,8 @@ class ErisError(Exception):
                 )
                 last_caused_by.append(exc_info_tuple)
 
+                # extend the stack by using lines from this Exception's
+                # traceback...
                 if tb := error.__traceback__:
                     last_stack.extend(traceback.extract_tb(tb).format())
 
