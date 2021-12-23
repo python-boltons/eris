@@ -1,3 +1,53 @@
+# name: test_is_json__CHAIN
+  <class 'list'> [
+    <class 'dict'> {
+      'caused_by': <class 'list'> [
+      ],
+      'exc_info': <class 'dict'> {
+        'exc_msg': 'Some BAR error has occurred.',
+        'exc_type': "<class 'eris._errors.ErisError'>",
+        'exc_value': '
+          ErisError::tests.test_eris::test_is_json__CHAIN::97{
+            Some BAR error has occurred.
+          }
+        ',
+      },
+      'file_name': '/eris/tests/test_eris.py',
+      'func_name': 'test_is_json__CHAIN',
+      'lineno': 97,
+      'module_name': 'tests.test_eris',
+      'stack': <class 'list'> [
+        '
+              err2 = Err("Some BAR error has occurred.").chain(err1)
+  
+        ',
+      ],
+    },
+    <class 'dict'> {
+      'caused_by': <class 'list'> [
+      ],
+      'exc_info': <class 'dict'> {
+        'exc_msg': 'Some FOO error has occurred.',
+        'exc_type': "<class 'eris._errors.ErisError'>",
+        'exc_value': '
+          ErisError::tests.test_eris::test_is_json__CHAIN::96{
+            Some FOO error has occurred.
+          }
+        ',
+      },
+      'file_name': '/eris/tests/test_eris.py',
+      'func_name': 'test_is_json__CHAIN',
+      'lineno': 96,
+      'module_name': 'tests.test_eris',
+      'stack': <class 'list'> [
+        '
+              err1 = Err("Some FOO error has occurred.")
+  
+        ',
+      ],
+    },
+  ]
+---
 # name: test_is_json__NO_CAUSE
   <class 'list'> [
     <class 'dict'> {
@@ -17,32 +67,8 @@
       'lineno': 33,
       'module_name': 'tests.test_eris',
       'stack': <class 'list'> [
-        ' ',
-        ' ',
-        ' ',
-        ' ',
-        'e',
-        'r',
-        'r',
-        ' ',
-        '=',
-        ' ',
-        'E',
-        'r',
-        'r',
-        '(',
-        'E',
-        'R',
-        'R',
-        'O',
-        'R',
-        '_',
-        'M',
-        'S',
-        'G',
-        ')',
         '
-          
+              err = Err(ERROR_MSG)
   
         ',
       ],
@@ -55,7 +81,7 @@
       'caused_by': <class 'list'> [
         <class 'tuple'> (
           "<class 'ZeroDivisionError'>",
-          'division by zero',
+          "ZeroDivisionError('division by zero')",
           'division by zero',
         ),
       ],
@@ -73,62 +99,106 @@
       'lineno': 47,
       'module_name': 'tests.test_eris',
       'stack': <class 'list'> [
-        ' ',
-        ' ',
-        ' ',
-        ' ',
-        ' ',
-        ' ',
-        ' ',
-        ' ',
-        'e',
-        'r',
-        'r',
-        ' ',
-        '=',
-        ' ',
-        'E',
-        'r',
-        'r',
-        '(',
-        'E',
-        'R',
-        'R',
-        'O',
-        'R',
-        '_',
-        'M',
-        'S',
-        'G',
-        ')',
-        '.',
-        'c',
-        'h',
-        'a',
-        'i',
-        'n',
-        '(',
-        'z',
-        'e',
-        'r',
-        'o',
-        '_',
-        'd',
-        'i',
-        'v',
-        '_',
-        'e',
-        'r',
-        'r',
-        'o',
-        'r',
-        ')',
         '
-          
+                  err = Err(ERROR_MSG).chain(zero_div_error)
   
         ',
         '
             File "/eris/tests/test_eris.py", line 44, in test_is_json__ONE_CAUSE
+              x = 1 / 0
+  
+        ',
+      ],
+    },
+  ]
+---
+# name: test_is_json__TWO_CAUSE
+  <class 'list'> [
+    <class 'dict'> {
+      'caused_by': <class 'list'> [
+        <class 'tuple'> (
+          "<class 'RuntimeError'>",
+          "RuntimeError('Why would we divide by zero?')",
+          'Why would we divide by zero?',
+        ),
+        <class 'tuple'> (
+          "<class 'ZeroDivisionError'>",
+          "ZeroDivisionError('division by zero')",
+          'division by zero',
+        ),
+      ],
+      'exc_info': <class 'dict'> {
+        'exc_msg': 'Something went wrong...',
+        'exc_type': "<class 'eris._errors.ErisError'>",
+        'exc_value': '
+          ErisError::tests.test_eris::test_is_json__TWO_CAUSE::65{
+            Something went wrong...
+          }
+        ',
+      },
+      'file_name': '/eris/tests/test_eris.py',
+      'func_name': 'test_is_json__TWO_CAUSE',
+      'lineno': 65,
+      'module_name': 'tests.test_eris',
+      'stack': <class 'list'> [
+        '
+                      err = Err(ERROR_MSG).chain(rt_error)
+  
+        ',
+        '
+            File "/eris/tests/test_eris.py", line 61, in test_is_json__TWO_CAUSE
+              raise RuntimeError(
+  
+        ',
+        '
+            File "/eris/tests/test_eris.py", line 57, in test_is_json__TWO_CAUSE
+              x = 1 / 0
+  
+        ',
+      ],
+    },
+  ]
+---
+# name: test_is_json__TWO_CAUSE_AND_RAISE_SELF
+  <class 'list'> [
+    <class 'dict'> {
+      'caused_by': <class 'list'> [
+        <class 'tuple'> (
+          "<class 'RuntimeError'>",
+          "RuntimeError('Why would we divide by zero?')",
+          'Why would we divide by zero?',
+        ),
+        <class 'tuple'> (
+          "<class 'ZeroDivisionError'>",
+          "ZeroDivisionError('division by zero')",
+          'division by zero',
+        ),
+      ],
+      'exc_info': <class 'dict'> {
+        'exc_msg': 'Something went wrong...',
+        'exc_type': "<class 'eris._errors.ErisError'>",
+        'exc_value': '
+          ErisError::tests.test_eris::test_is_json__TWO_CAUSE_AND_RAISE_SELF::84{
+            Something went wrong...
+          }
+        ',
+      },
+      'file_name': '/eris/tests/test_eris.py',
+      'func_name': 'test_is_json__TWO_CAUSE_AND_RAISE_SELF',
+      'lineno': 84,
+      'module_name': 'tests.test_eris',
+      'stack': <class 'list'> [
+        '
+                      error = ErisError(ERROR_MSG)
+  
+        ',
+        '
+            File "/eris/tests/test_eris.py", line 80, in test_is_json__TWO_CAUSE_AND_RAISE_SELF
+              raise RuntimeError(
+  
+        ',
+        '
+            File "/eris/tests/test_eris.py", line 76, in test_is_json__TWO_CAUSE_AND_RAISE_SELF
               x = 1 / 0
   
         ',

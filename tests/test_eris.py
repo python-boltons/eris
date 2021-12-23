@@ -28,7 +28,7 @@ def test_init_err_with_string() -> None:
 def test_is_json__NO_CAUSE(snapshot: Snapshot) -> None:
     """Test the Err/Error.to_json() methods.
 
-    NO error chain and NO 'caused by' exceptions.
+    NO ErisError chain and NO 'caused by' exceptions.
     """
     err = Err(ERROR_MSG)
     error = err.err()
@@ -38,7 +38,7 @@ def test_is_json__NO_CAUSE(snapshot: Snapshot) -> None:
 def test_is_json__ONE_CAUSE(snapshot: Snapshot) -> None:
     """Test the Err/Error.to_json() methods.
 
-    NO error chain and ONE 'caused by' exception.
+    NO ErisError chain and ONE 'caused by' exception.
     """
     try:
         x = 1 / 0
@@ -51,16 +51,41 @@ def test_is_json__ONE_CAUSE(snapshot: Snapshot) -> None:
 def test_is_json__TWO_CAUSE(snapshot: Snapshot) -> None:
     """Test the Err/Error.to_json() methods.
 
-    NO error chain and TWO 'caused by' exceptions.
+    NO ErisError chain and TWO 'caused by' exceptions.
     """
+    try:
+        x = 1 / 0
+        print(x)
+    except ZeroDivisionError as zero_div_error:
+        try:
+            raise RuntimeError(
+                "Why would we divide by zero?"
+            ) from zero_div_error
+        except RuntimeError as rt_error:
+            err = Err(ERROR_MSG).chain(rt_error)
+            assert snapshot == err.to_json()
 
 
 def test_is_json__TWO_CAUSE_AND_RAISE_SELF(snapshot: Snapshot) -> None:
     """Test the Err/Error.to_json() methods.
 
-    NO error chain and TWO 'caused by' exceptions. This test case calls
+    NO ErisError chain and TWO 'caused by' exceptions. This test case calls
     Error.to_json() after catching an Error exception.
     """
+    try:
+        x = 1 / 0
+        print(x)
+    except ZeroDivisionError as zero_div_error:
+        try:
+            raise RuntimeError(
+                "Why would we divide by zero?"
+            ) from zero_div_error
+        except RuntimeError as rt_error:
+            error = ErisError(ERROR_MSG)
+            try:
+                raise error from rt_error
+            except ErisError as eris_error:
+                assert snapshot == eris_error.to_json()
 
 
 def test_is_json__CHAIN(snapshot: Snapshot) -> None:
@@ -68,3 +93,6 @@ def test_is_json__CHAIN(snapshot: Snapshot) -> None:
 
     Chain multiple Error objects together.
     """
+    err1 = Err("Some FOO error has occurred.")
+    err2 = Err("Some BAR error has occurred.").chain(err1)
+    assert snapshot == err2.to_json()

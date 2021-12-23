@@ -116,8 +116,8 @@ class ErisError(Exception):
                 stack = last_stack = list(error.inspector.lines)
 
                 exc_info: ExcInfo = dict(
-                    exc_type=str(type(error)),
-                    exc_value=str(error),
+                    exc_type=repr(type(error)),
+                    exc_value=repr(error),
                     exc_msg=error.args[0],
                 )
                 eris_error_dict: ErisErrorDict = dict(
@@ -137,8 +137,8 @@ class ErisError(Exception):
                 # extend the last Error's 'caused_by' list with this
                 # Exception's info...
                 exc_info_tuple: ExcInfoTuple = (
-                    str(type(error)),
-                    str(error),
+                    repr(type(error)),
+                    repr(error),
                     str(error.args[0]) if error.args else NULL,
                 )
                 last_caused_by.append(exc_info_tuple)
