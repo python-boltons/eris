@@ -6,13 +6,13 @@ log errors in Python.
 
 import logging as _logging
 
-from ._errors import Error, chain_errors
+from ._errors import ErisError, chain_errors
 from ._result import Err, LazyResult, Ok, Result, return_lazy_result
 
 
 __all__ = [
+    "ErisError",
     "Err",
-    "Error",
     "LazyResult",
     "Ok",
     "Result",

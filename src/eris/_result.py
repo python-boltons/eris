@@ -86,7 +86,7 @@ from typing import (
     Union,
 )
 
-from ._errors import Error, ErrorChain
+from ._errors import ErisError, ErisErrorChain
 
 
 T = TypeVar("T")
@@ -102,7 +102,7 @@ class _ResultMixin(ABC, Generic[T]):
         )
 
     @abstractmethod
-    def err(self) -> Optional[Error]:
+    def err(self) -> Optional[ErisError]:
         """Returns None if successful or an Exception type otherwise."""
 
     @abstractmethod
@@ -139,17 +139,17 @@ class Err:
     error.
     """
 
-    _error_or_string: InitVar[Union[str, Error]]
-    _error: Error = field(init=False)
+    _error_or_string: InitVar[Union[str, ErisError]]
+    _error: ErisError = field(init=False)
 
-    def __post_init__(self, error_or_string: Union[str, Error]) -> None:
+    def __post_init__(self, error_or_string: Union[str, ErisError]) -> None:
         """Set the `_error` attribute."""
         if isinstance(error_or_string, str):
-            self._error = Error(error_or_string, up=2)
+            self._error = ErisError(error_or_string, up=2)
         else:
             self._error = error_or_string
 
-    def err(self) -> Error:  # noqa: D102
+    def err(self) -> ErisError:  # noqa: D102
         return self._error
 
     def unwrap(self) -> NoReturn:  # noqa: D102
@@ -165,7 +165,7 @@ class Err:
         self.err().chain(other_exception)
         return self
 
-    def to_json(self) -> ErrorChain:
+    def to_json(self) -> ErisErrorChain:
         """A thin wrapper around self.err().to_json()."""
         return self.err().to_json()
 
@@ -220,7 +220,7 @@ class LazyResult(_ResultMixin[T]):
             self._result = self._func(*self._args, **self._kwargs)
         return self._result
 
-    def err(self) -> Optional[Error]:  # noqa: D102
+    def err(self) -> Optional[ErisError]:  # noqa: D102
         return self.result().err()
 
     def unwrap(self) -> T:  # noqa: D102

@@ -2,10 +2,10 @@
 
 from __future__ import annotations
 
-from eris import Err, Error
+from eris import Err, ErisError
 
 
 def test_err_method() -> None:
     """Test the Err.err() method."""
-    error = Error("test error")
+    error = ErisError("test error")
     assert Err(error).err() == error

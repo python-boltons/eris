@@ -21,7 +21,7 @@ from typist import E, T
 
 Null = Literal["null"]
 Nullable = Union[Null, T]
-ErrorChain = List["ErrorDict"]
+ErisErrorChain = List["ErisErrorDict"]
 ExcInfoTuple = Tuple[str, str, Nullable[str]]
 
 FIRST_EXC_IS_WRONG_TYPE: Final = (
@@ -39,7 +39,7 @@ class ExcInfo(TypedDict):
     exc_msg: str
 
 
-class ErrorDict(TypedDict):
+class ErisErrorDict(TypedDict):
     """An Error type represented as a dictionary."""
 
     # exception info
@@ -57,7 +57,7 @@ class ErrorDict(TypedDict):
     caused_by: Nullable[List[ExcInfoTuple]]
 
 
-class Error(Exception):
+class ErisError(Exception):
     """Custom general-purpose exception."""
 
     def __init__(self, emsg: str, up: int = 0) -> None:
@@ -94,11 +94,11 @@ class Error(Exception):
             yield e
             e = e.__cause__
 
-    def chain(self, other: Exception) -> "Error":
+    def chain(self, other: Exception) -> "ErisError":
         """Chains this exception to another."""
         return chain_errors(self, other)
 
-    def to_json(self) -> ErrorChain:
+    def to_json(self) -> ErisErrorChain:
         """Converts this error into a list of dictionaries.
 
         This list is JSON serializable and is composed of data on this
@@ -112,7 +112,7 @@ class Error(Exception):
         last_stack: Optional[List[str]] = None
         last_caused_by: Optional[List[ExcInfoTuple]] = None
         for error in self:
-            if isinstance(error, Error):
+            if isinstance(error, ErisError):
                 caused_by = last_caused_by = []
                 stack = last_stack = []
 
@@ -121,7 +121,7 @@ class Error(Exception):
                     exc_value=str(error),
                     exc_msg=error.args[0],
                 )
-                error_dict: ErrorDict = dict(
+                eris_error_dict: ErisErrorDict = dict(
                     exc_info=exc_info,
                     lineno=error.inspector.line_number,
                     module_name=error.inspector.module_name,
@@ -132,7 +132,7 @@ class Error(Exception):
                     stack=stack,
                     caused_by=caused_by,
                 )
-                result.append(error_dict)
+                result.append(eris_error_dict)
             else:
                 assert last_stack is not None, FIRST_EXC_IS_WRONG_TYPE
                 assert last_caused_by is not None, FIRST_EXC_IS_WRONG_TYPE
