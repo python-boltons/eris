@@ -6,7 +6,7 @@ log errors in Python.
 
 import logging as _logging
 
-from ._errors import ErisError, chain_errors
+from ._errors import ErisError
 from ._result import Err, LazyResult, Ok, Result, return_lazy_result
 
 
@@ -16,7 +16,6 @@ __all__ = [
     "LazyResult",
     "Ok",
     "Result",
-    "chain_errors",
     "return_lazy_result",
 ]
 

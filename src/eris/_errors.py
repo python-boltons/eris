@@ -96,7 +96,7 @@ class ErisError(Exception):
 
     def chain(self, other: Exception) -> "ErisError":
         """Chains this exception to another."""
-        return chain_errors(self, other)
+        return _chain_errors(self, other)
 
     def to_json(self) -> ErisErrorChain:
         """Converts this error into a list of dictionaries.
@@ -150,7 +150,7 @@ class ErisError(Exception):
         return result
 
 
-def chain_errors(e1: E, e2: Optional[Exception]) -> E:
+def _chain_errors(e1: E, e2: Optional[Exception]) -> E:
     """Chain two exceptions together.
 
     This is the functional equivalent to ``raise e1 from e2``.
