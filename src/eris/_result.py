@@ -166,7 +166,7 @@ class Err:
         return self
 
     def to_json(self) -> ErisErrorChain:
-        """A thin wrapper around self.err().to_json()."""
+        """A thin wrapper around ErisError.to_json()."""
         return self.err().to_json()
 
 
