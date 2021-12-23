@@ -3,7 +3,7 @@
 Welcome to eris's documentation!
 ================================
 
-The Greek Goddess of Strife and Discord... The better way to handle, trace, and log errors in
+The Greek Goddess of Strife and Discord... A better way to handle, trace, and log errors in
 Python.
 
 .. toctree::

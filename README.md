@@ -1,6 +1,6 @@
 # eris
 
-**The Greek Goddess of Strife and Discord... The better way to handle, trace, and log errors in Python.**
+**The Greek Goddess of Strife and Discord... A better way to handle, trace, and log errors in Python.**
 
 _project status badges:_
 
