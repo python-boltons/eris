@@ -9,9 +9,20 @@ The format is based on [Keep a Changelog], and this project adheres to
 [Semantic Versioning]: https://semver.org/
 
 
-## [Unreleased](https://github.com/python-boltons/eris/compare/0.1.1...HEAD)
+## [Unreleased](https://github.com/python-boltons/eris/compare/0.1.2...HEAD)
 
 No notable changes have been made.
+
+
+## [0.1.2](https://github.com/python-boltons/eris/compare/0.1.1...0.1.2) - 2021-12-23
+
+### Changed
+
+* Add `eris.ErisErrorChain` and `eris.ErisErrorDict` to public API.
+
+### Removed
+
+* Remove `eris.chain_errors()` public API function.
 
 
 ## [0.1.1](https://github.com/python-boltons/eris/compare/0.1.0...0.1.1) - 2021-12-22
