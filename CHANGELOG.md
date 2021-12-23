@@ -9,9 +9,16 @@ The format is based on [Keep a Changelog], and this project adheres to
 [Semantic Versioning]: https://semver.org/
 
 
-## [Unreleased](https://github.com/python-boltons/eris/compare/0.2.0...HEAD)
+## [Unreleased](https://github.com/python-boltons/eris/compare/0.2.1...HEAD)
 
 No notable changes have been made.
+
+
+## [0.2.1](https://github.com/python-boltons/eris/compare/0.2.0...0.2.1) - 2021-12-23
+
+### Changed
+
+* The `Err` `dataclass` now accepts an optional `up` kwarg.
 
 
 ## [0.2.0](https://github.com/python-boltons/eris/compare/0.1.2...0.2.0) - 2021-12-23

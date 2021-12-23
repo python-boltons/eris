@@ -158,15 +158,33 @@ class Err(_ResultMixin[T, E]):
     error.
     """
 
-    _error_or_string: InitVar[Union[str, E]]
+    # `error_spec` is used to construct `_error` and is then thrown away
+    #
+    # WARNING: If `error_spec` is a string, then the type variable `E` _must_
+    # be `ErisError`!
+    error_spec: InitVar[Union[str, E]]
     _error: E = field(init=False)
 
-    def __post_init__(self, error_or_string: Union[str, E]) -> None:
-        """Set the `_error` attribute."""
-        if isinstance(error_or_string, str):
-            self._error = cast(E, ErisError(error_or_string, up=2))
+    # `up` is used to control what set of metadata we see when inspecting an
+    # ErisError. Useful when writing functions that are meant to wrap the Err
+    # type.
+    #
+    # WARNING: `up` can _only_ be provided when `error_spec` is a string, since
+    # this argument is passed to ErisError to construct it. This argument has
+    # no effect otherwise (since assertions are probably a bad idea inside of
+    # error-handling logic).
+    up: InitVar[int] = 0
+
+    def __post_init__(self, error_spec: Union[str, E], up: int) -> None:
+        """Special `dataclasses.dataclass` method.
+
+        We perform the following tasks at post-init time:
+            * Set the `_error` attribute.
+        """
+        if isinstance(error_spec, str):
+            self._error = cast(E, ErisError(error_spec, up=up + 2))
         else:
-            self._error = error_or_string
+            self._error = error_spec
 
     def err(self) -> E:  # noqa: D102
         return self._error
