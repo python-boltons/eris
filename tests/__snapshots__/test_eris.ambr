@@ -7,14 +7,14 @@
         'exc_msg': 'Some BAR error has occurred.',
         'exc_type': "<class 'eris._errors.ErisError'>",
         'exc_value': '
-          ErisError::tests.test_eris::test_is_json__CHAIN::129{
+          ErisError::tests.test_eris::test_is_json__CHAIN::127{
             Some BAR error has occurred.
           }
         ',
       },
       'file_name': '/eris/tests/test_eris.py',
       'func_name': 'test_is_json__CHAIN',
-      'lineno': 129,
+      'lineno': 127,
       'module_name': 'tests.test_eris',
       'stack': <class 'list'> [
         '
@@ -30,14 +30,14 @@
         'exc_msg': 'Something went wrong...',
         'exc_type': "<class 'eris._errors.ErisError'>",
         'exc_value': '
-          ErisError::tests.test_eris::test_is_json__CHAIN::130{
+          ErisError::tests.test_eris::test_is_json__CHAIN::128{
             Something went wrong...
           }
         ',
       },
       'file_name': '/eris/tests/test_eris.py',
       'func_name': 'test_is_json__CHAIN',
-      'lineno': 130,
+      'lineno': 128,
       'module_name': 'tests.test_eris',
       'stack': <class 'list'> [
         '
@@ -57,14 +57,14 @@
         'exc_msg': 'Something went wrong...',
         'exc_type': "<class 'eris._errors.ErisError'>",
         'exc_value': '
-          ErisError::tests.test_eris::test_is_json__NO_CAUSE::66{
+          ErisError::tests.test_eris::test_is_json__NO_CAUSE::64{
             Something went wrong...
           }
         ',
       },
       'file_name': '/eris/tests/test_eris.py',
       'func_name': 'test_is_json__NO_CAUSE',
-      'lineno': 66,
+      'lineno': 64,
       'module_name': 'tests.test_eris',
       'stack': <class 'list'> [
         '
@@ -89,14 +89,14 @@
         'exc_msg': 'Something went wrong...',
         'exc_type': "<class 'eris._errors.ErisError'>",
         'exc_value': '
-          ErisError::tests.test_eris::test_is_json__ONE_CAUSE::80{
+          ErisError::tests.test_eris::test_is_json__ONE_CAUSE::78{
             Something went wrong...
           }
         ',
       },
       'file_name': '/eris/tests/test_eris.py',
       'func_name': 'test_is_json__ONE_CAUSE',
-      'lineno': 80,
+      'lineno': 78,
       'module_name': 'tests.test_eris',
       'stack': <class 'list'> [
         '
@@ -104,7 +104,7 @@
   
         ',
         '
-            File "/eris/tests/test_eris.py", line 77, in test_is_json__ONE_CAUSE
+            File "/eris/tests/test_eris.py", line 75, in test_is_json__ONE_CAUSE
               x = 1 / 0
   
         ',
@@ -131,14 +131,14 @@
         'exc_msg': 'Something went wrong...',
         'exc_type': "<class 'eris._errors.ErisError'>",
         'exc_value': '
-          ErisError::tests.test_eris::test_is_json__TWO_CAUSE::98{
+          ErisError::tests.test_eris::test_is_json__TWO_CAUSE::96{
             Something went wrong...
           }
         ',
       },
       'file_name': '/eris/tests/test_eris.py',
       'func_name': 'test_is_json__TWO_CAUSE',
-      'lineno': 98,
+      'lineno': 96,
       'module_name': 'tests.test_eris',
       'stack': <class 'list'> [
         '
@@ -146,12 +146,12 @@
   
         ',
         '
-            File "/eris/tests/test_eris.py", line 94, in test_is_json__TWO_CAUSE
+            File "/eris/tests/test_eris.py", line 92, in test_is_json__TWO_CAUSE
               raise RuntimeError(
   
         ',
         '
-            File "/eris/tests/test_eris.py", line 90, in test_is_json__TWO_CAUSE
+            File "/eris/tests/test_eris.py", line 88, in test_is_json__TWO_CAUSE
               x = 1 / 0
   
         ',
@@ -178,14 +178,14 @@
         'exc_msg': 'Something went wrong...',
         'exc_type': "<class 'eris._errors.ErisError'>",
         'exc_value': '
-          ErisError::tests.test_eris::test_is_json__TWO_CAUSE_AND_RAISE_SELF::117{
+          ErisError::tests.test_eris::test_is_json__TWO_CAUSE_AND_RAISE_SELF::115{
             Something went wrong...
           }
         ',
       },
       'file_name': '/eris/tests/test_eris.py',
       'func_name': 'test_is_json__TWO_CAUSE_AND_RAISE_SELF',
-      'lineno': 117,
+      'lineno': 115,
       'module_name': 'tests.test_eris',
       'stack': <class 'list'> [
         '
@@ -193,12 +193,12 @@
   
         ',
         '
-            File "/eris/tests/test_eris.py", line 113, in test_is_json__TWO_CAUSE_AND_RAISE_SELF
+            File "/eris/tests/test_eris.py", line 111, in test_is_json__TWO_CAUSE_AND_RAISE_SELF
               raise RuntimeError(
   
         ',
         '
-            File "/eris/tests/test_eris.py", line 109, in test_is_json__TWO_CAUSE_AND_RAISE_SELF
+            File "/eris/tests/test_eris.py", line 107, in test_is_json__TWO_CAUSE_AND_RAISE_SELF
               x = 1 / 0
   
         ',

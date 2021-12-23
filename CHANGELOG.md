@@ -9,9 +9,17 @@ The format is based on [Keep a Changelog], and this project adheres to
 [Semantic Versioning]: https://semver.org/
 
 
-## [Unreleased](https://github.com/python-boltons/eris/compare/0.1.2...HEAD)
+## [Unreleased](https://github.com/python-boltons/eris/compare/0.2.0...HEAD)
 
 No notable changes have been made.
+
+
+## [0.2.0](https://github.com/python-boltons/eris/compare/0.1.2...0.2.0) - 2021-12-23
+
+### Changed
+
+* Allow custom sub-types of `ErisError` to be used with the `Result` type.
+* *BREAKING CHANGE*: The `Err` type is now a generic with two type variables.
 
 
 ## [0.1.2](https://github.com/python-boltons/eris/compare/0.1.1...0.1.2) - 2021-12-23
