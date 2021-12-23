@@ -72,7 +72,7 @@ Examples:
 """
 
 from abc import ABC, abstractmethod
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from functools import wraps
 from typing import (
     Any,
@@ -86,12 +86,13 @@ from typing import (
     Union,
 )
 
+from ._errors import Error, ErrorChain
 
-E = TypeVar("E", bound=Exception)
+
 T = TypeVar("T")
 
 
-class _ResultMixin(ABC, Generic[T, E]):
+class _ResultMixin(ABC, Generic[T]):
     def __bool__(self) -> NoReturn:
         raise ValueError(
             f"{self.__class__.__name__} object cannot be evaluated as a"
@@ -101,24 +102,16 @@ class _ResultMixin(ABC, Generic[T, E]):
         )
 
     @abstractmethod
-    def err(self) -> Optional[E]:
+    def err(self) -> Optional[Error]:
         """Returns None if successful or an Exception type otherwise."""
 
     @abstractmethod
     def unwrap(self) -> T:
         """Returns real return type or raises an exception if unsuccessful."""
 
-    @abstractmethod
-    def unwrap_or(self, default: T) -> T:
-        """Returns real return type if successful or ``default`` otherwise."""
-
-    @abstractmethod
-    def unwrap_or_else(self, op: Callable[[E], T]) -> T:
-        """Returns real return type if successful or ``op(e)`` otherwise."""
-
 
 @dataclass(frozen=True)
-class Ok(_ResultMixin[T, E]):
+class Ok(_ResultMixin[T]):
     """Ok result type.
 
     A value that indicates success and which stores arbitrary data for the
@@ -137,45 +130,52 @@ class Ok(_ResultMixin[T, E]):
     def unwrap(self) -> T:  # noqa: D102
         return self.ok()
 
-    def unwrap_or(self, default: T) -> T:  # noqa: D102
-        return self.ok()
 
-    def unwrap_or_else(self, op: Callable[[E], T]) -> T:  # noqa: D102
-        return self.ok()
-
-
-@dataclass(frozen=True)
-class Err(_ResultMixin[T, E]):
+@dataclass
+class Err:
     """Err result type.
 
     A value that signifies failure and which stores arbitrary data for the
     error.
     """
 
-    _error: E
+    _error_msg: str
+    _error: Error = field(init=False)
 
-    def err(self) -> E:  # noqa: D102
+    def __post_init__(self) -> None:
+        """Set the `_error` attribute."""
+        self._error = Error(self._error_msg, up=2)
+
+    def err(self) -> Error:  # noqa: D102
         return self._error
 
     def unwrap(self) -> NoReturn:  # noqa: D102
         raise self.err()
 
-    def unwrap_or(self, default: T) -> T:  # noqa: D102
-        return default
+    def chain(self, exc_or_err: Union[Exception, "Err"]) -> "Err":
+        """Wraps another Exception object with this Exception object."""
+        if isinstance(exc_or_err, Exception):
+            other_exception = exc_or_err
+        else:
+            other_exception = exc_or_err.err()
 
-    def unwrap_or_else(self, op: Callable[[E], T]) -> T:  # noqa: D102
-        return op(self.err())
+        self.err().chain(other_exception)
+        return self
+
+    def to_json(self) -> ErrorChain:
+        """A thin wrapper around self.err().to_json()."""
+        return self.err().to_json()
 
 
 # The 'Result' return type is used to implement an error-handling model heavily
 # influenced by that used by the Rust programming language
 # (see https://doc.rust-lang.org/book/ch09-00-error-handling.html).
-Result = Union[Ok[T, E], Err[T, E]]
+Result = Union[Ok[T], Err]
 
 
 def return_lazy_result(
-    func: Callable[..., Result[T, E]]
-) -> Callable[..., "LazyResult[T, E]"]:
+    func: Callable[..., Result[T]]
+) -> Callable[..., "LazyResult[T]"]:
     """Converts the return type of a function from result to a "lazy" result.
 
     In order to fetch the real return type from lazy_result, you must call
@@ -183,30 +183,30 @@ def return_lazy_result(
     lazy_result.unwrap()].
 
     This decorator is useful when dealing with functions that return
-    Result[None, E] (i.e. functions that are used soley for their
+    Result[None] (i.e. functions that are used soley for their
     side-effects), since it makes it harder to ignore potential errors.
     """
 
     @wraps(func)
-    def wrapper(*args: Any, **kwargs: Any) -> LazyResult[T, E]:
+    def wrapper(*args: Any, **kwargs: Any) -> LazyResult[T]:
         return LazyResult(func, *args, **kwargs)
 
     return wrapper
 
 
-class LazyResult(_ResultMixin[T, E]):
+class LazyResult(_ResultMixin[T]):
     """See `help(return_lazy_result)`."""
 
     def __init__(
-        self, func: Callable[..., Result[T, E]], *args: Any, **kwargs: Any
+        self, func: Callable[..., Result[T]], *args: Any, **kwargs: Any
     ) -> None:
         self._func = func
         self._args: Tuple[Any, ...] = args
         self._kwargs: Dict[str, Any] = kwargs
 
-        self._result: Optional[Result[T, E]] = None
+        self._result: Optional[Result[T]] = None
 
-    def result(self) -> Result[T, E]:
+    def result(self) -> Result[T]:
         """Retrieve the Result object corresponding with this LazyResult.
 
         Calls the function corresponding with this LazyResult (this function
@@ -217,14 +217,8 @@ class LazyResult(_ResultMixin[T, E]):
             self._result = self._func(*self._args, **self._kwargs)
         return self._result
 
-    def err(self) -> Optional[E]:  # noqa: D102
+    def err(self) -> Optional[Error]:  # noqa: D102
         return self.result().err()
 
     def unwrap(self) -> T:  # noqa: D102
         return self.result().unwrap()
-
-    def unwrap_or(self, default: T) -> T:  # noqa: D102
-        return self.result().unwrap_or(default)
-
-    def unwrap_or_else(self, op: Callable[[E], T]) -> T:  # noqa: D102
-        return self.result().unwrap_or_else(op)
