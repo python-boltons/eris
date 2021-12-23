@@ -71,6 +71,8 @@ Examples:
             return 0
 """
 
+from __future__ import annotations
+
 from abc import ABC, abstractmethod
 from dataclasses import InitVar, dataclass, field
 from functools import wraps
@@ -84,15 +86,18 @@ from typing import (
     Tuple,
     TypeVar,
     Union,
+    cast,
 )
 
 from ._errors import ErisError, ErisErrorChain
 
 
 T = TypeVar("T")
+E = TypeVar("E", bound=ErisError)
+ErrType = TypeVar("ErrType", bound="Err")
 
 
-class _ResultMixin(ABC, Generic[T]):
+class _ResultMixin(ABC, Generic[T, E]):
     def __bool__(self) -> NoReturn:
         raise ValueError(
             f"{self.__class__.__name__} object cannot be evaluated as a"
@@ -102,16 +107,24 @@ class _ResultMixin(ABC, Generic[T]):
         )
 
     @abstractmethod
-    def err(self) -> Optional[ErisError]:
+    def err(self) -> Optional[E]:
         """Returns None if successful or an Exception type otherwise."""
 
     @abstractmethod
     def unwrap(self) -> T:
         """Returns real return type or raises an exception if unsuccessful."""
 
+    @abstractmethod
+    def unwrap_or(self, default: T) -> T:
+        """Returns real return type if successful or ``default`` otherwise."""
+
+    @abstractmethod
+    def unwrap_or_else(self, op: Callable[[E], T]) -> T:
+        """Returns real return type if successful or ``op(e)`` otherwise."""
+
 
 @dataclass(frozen=True)
-class Ok(_ResultMixin[T]):
+class Ok(_ResultMixin[T, E]):
     """Ok result type.
 
     A value that indicates success and which stores arbitrary data for the
@@ -130,32 +143,44 @@ class Ok(_ResultMixin[T]):
     def unwrap(self) -> T:  # noqa: D102
         return self.ok()
 
+    def unwrap_or(self, default: T) -> T:  # noqa: D102
+        return self.ok()
+
+    def unwrap_or_else(self, op: Callable[[E], T]) -> T:  # noqa: D102
+        return self.ok()
+
 
 @dataclass
-class Err:
+class Err(_ResultMixin[T, E]):
     """Err result type.
 
     A value that signifies failure and which stores arbitrary data for the
     error.
     """
 
-    _error_or_string: InitVar[Union[str, ErisError]]
-    _error: ErisError = field(init=False)
+    _error_or_string: InitVar[Union[str, E]]
+    _error: E = field(init=False)
 
-    def __post_init__(self, error_or_string: Union[str, ErisError]) -> None:
+    def __post_init__(self, error_or_string: Union[str, E]) -> None:
         """Set the `_error` attribute."""
         if isinstance(error_or_string, str):
-            self._error = ErisError(error_or_string, up=2)
+            self._error = cast(E, ErisError(error_or_string, up=2))
         else:
             self._error = error_or_string
 
-    def err(self) -> ErisError:  # noqa: D102
+    def err(self) -> E:  # noqa: D102
         return self._error
 
     def unwrap(self) -> NoReturn:  # noqa: D102
         raise self.err()
 
-    def chain(self, exc_or_err: Union[Exception, "Err"]) -> "Err":
+    def unwrap_or(self, default: T) -> T:  # noqa: D102
+        return default
+
+    def unwrap_or_else(self, op: Callable[[E], T]) -> T:  # noqa: D102
+        return op(self.err())
+
+    def chain(self: ErrType, exc_or_err: Union[Exception, Err]) -> ErrType:
         """Wraps another Exception object with this Exception object."""
         if isinstance(exc_or_err, Exception):
             other_exception = exc_or_err
@@ -173,12 +198,12 @@ class Err:
 # The 'Result' return type is used to implement an error-handling model heavily
 # influenced by that used by the Rust programming language
 # (see https://doc.rust-lang.org/book/ch09-00-error-handling.html).
-Result = Union[Ok[T], Err]
+Result = Union[Ok[T, E], Err[T, E]]
 
 
 def return_lazy_result(
-    func: Callable[..., Result[T]]
-) -> Callable[..., "LazyResult[T]"]:
+    func: Callable[..., Result[T, E]]
+) -> Callable[..., "LazyResult[T, E]"]:
     """Converts the return type of a function from result to a "lazy" result.
 
     In order to fetch the real return type from lazy_result, you must call
@@ -191,25 +216,25 @@ def return_lazy_result(
     """
 
     @wraps(func)
-    def wrapper(*args: Any, **kwargs: Any) -> LazyResult[T]:
+    def wrapper(*args: Any, **kwargs: Any) -> LazyResult[T, E]:
         return LazyResult(func, *args, **kwargs)
 
     return wrapper
 
 
-class LazyResult(_ResultMixin[T]):
+class LazyResult(_ResultMixin[T, E]):
     """See `help(return_lazy_result)`."""
 
     def __init__(
-        self, func: Callable[..., Result[T]], *args: Any, **kwargs: Any
+        self, func: Callable[..., Result[T, E]], *args: Any, **kwargs: Any
     ) -> None:
         self._func = func
         self._args: Tuple[Any, ...] = args
         self._kwargs: Dict[str, Any] = kwargs
 
-        self._result: Optional[Result[T]] = None
+        self._result: Optional[Result[T, E]] = None
 
-    def result(self) -> Result[T]:
+    def result(self) -> Result[T, E]:
         """Retrieve the Result object corresponding with this LazyResult.
 
         Calls the function corresponding with this LazyResult (this function
@@ -220,8 +245,14 @@ class LazyResult(_ResultMixin[T]):
             self._result = self._func(*self._args, **self._kwargs)
         return self._result
 
-    def err(self) -> Optional[ErisError]:  # noqa: D102
+    def err(self) -> Optional[E]:  # noqa: D102
         return self.result().err()
 
     def unwrap(self) -> T:  # noqa: D102
         return self.result().unwrap()
+
+    def unwrap_or(self, default: T) -> T:  # noqa: D102
+        return self.result().unwrap_or(default)
+
+    def unwrap_or_else(self, op: Callable[[E], T]) -> T:  # noqa: D102
+        return self.result().unwrap_or_else(op)
