@@ -79,11 +79,11 @@
   <class 'list'> [
     <class 'dict'> {
       'caused_by': <class 'list'> [
-        <class 'tuple'> (
-          "<class 'ZeroDivisionError'>",
-          "ZeroDivisionError('division by zero')",
-          'division by zero',
-        ),
+        <class 'dict'> {
+          'exc_msg': 'division by zero',
+          'exc_type': "<class 'ZeroDivisionError'>",
+          'exc_value': "ZeroDivisionError('division by zero')",
+        },
       ],
       'exc_info': <class 'dict'> {
         'exc_msg': 'Something went wrong...',
@@ -116,16 +116,16 @@
   <class 'list'> [
     <class 'dict'> {
       'caused_by': <class 'list'> [
-        <class 'tuple'> (
-          "<class 'RuntimeError'>",
-          "RuntimeError('Why would we divide by zero?')",
-          'Why would we divide by zero?',
-        ),
-        <class 'tuple'> (
-          "<class 'ZeroDivisionError'>",
-          "ZeroDivisionError('division by zero')",
-          'division by zero',
-        ),
+        <class 'dict'> {
+          'exc_msg': 'Why would we divide by zero?',
+          'exc_type': "<class 'RuntimeError'>",
+          'exc_value': "RuntimeError('Why would we divide by zero?')",
+        },
+        <class 'dict'> {
+          'exc_msg': 'division by zero',
+          'exc_type': "<class 'ZeroDivisionError'>",
+          'exc_value': "ZeroDivisionError('division by zero')",
+        },
       ],
       'exc_info': <class 'dict'> {
         'exc_msg': 'Something went wrong...',
@@ -163,16 +163,16 @@
   <class 'list'> [
     <class 'dict'> {
       'caused_by': <class 'list'> [
-        <class 'tuple'> (
-          "<class 'RuntimeError'>",
-          "RuntimeError('Why would we divide by zero?')",
-          'Why would we divide by zero?',
-        ),
-        <class 'tuple'> (
-          "<class 'ZeroDivisionError'>",
-          "ZeroDivisionError('division by zero')",
-          'division by zero',
-        ),
+        <class 'dict'> {
+          'exc_msg': 'Why would we divide by zero?',
+          'exc_type': "<class 'RuntimeError'>",
+          'exc_value': "RuntimeError('Why would we divide by zero?')",
+        },
+        <class 'dict'> {
+          'exc_msg': 'division by zero',
+          'exc_type': "<class 'ZeroDivisionError'>",
+          'exc_value': "ZeroDivisionError('division by zero')",
+        },
       ],
       'exc_info': <class 'dict'> {
         'exc_msg': 'Something went wrong...',

@@ -97,8 +97,17 @@ E = TypeVar("E", bound=ErisError)
 ErrType = TypeVar("ErrType", bound="Err")
 
 
-class _ResultMixin(ABC, Generic[T, E]):
+class AbstractResult(ABC, Generic[T, E]):
+    """This class defines what a Result object looks like."""
+
     def __bool__(self) -> NoReturn:
+        """Called implicitly on `bool(ok_or_err)`.
+
+        We raise a ValueError here to prevent Ok/Err objects from being
+        evaluated as bools, which can make it easy to forget to check for
+        errors and make it seem like a predicate (i.e. a function that returns
+        a bool) always returns True.
+        """
         raise ValueError(
             f"{self.__class__.__name__} object cannot be evaluated as a"
             " boolean. This is probably a bug in your code. Make sure you are"
@@ -124,7 +133,7 @@ class _ResultMixin(ABC, Generic[T, E]):
 
 
 @dataclass(frozen=True)
-class Ok(_ResultMixin[T, E]):
+class Ok(AbstractResult[T, E]):
     """Ok result type.
 
     A value that indicates success and which stores arbitrary data for the
@@ -151,7 +160,7 @@ class Ok(_ResultMixin[T, E]):
 
 
 @dataclass
-class Err(_ResultMixin[T, E]):
+class Err(AbstractResult[T, E]):
     """Err result type.
 
     A value that signifies failure and which stores arbitrary data for the
@@ -240,7 +249,7 @@ def return_lazy_result(
     return wrapper
 
 
-class LazyResult(_ResultMixin[T, E]):
+class LazyResult(AbstractResult[T, E]):
     """See `help(return_lazy_result)`."""
 
     def __init__(

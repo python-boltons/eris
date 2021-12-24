@@ -3,16 +3,7 @@
 from __future__ import annotations
 
 import traceback
-from typing import (
-    Final,
-    Iterator,
-    List,
-    Literal,
-    Optional,
-    Tuple,
-    TypedDict,
-    Union,
-)
+from typing import Final, Iterator, List, Literal, Optional, TypedDict, Union
 
 from ion import efill
 from metaman import Inspector, cname
@@ -22,7 +13,6 @@ from typist import E, T
 Null = Literal["null"]
 Nullable = Union[Null, T]
 ErisErrorChain = List["ErisErrorDict"]
-ExcInfoTuple = Tuple[str, str, Nullable[str]]
 
 FIRST_EXC_IS_WRONG_TYPE: Final = (
     "Logic error. The first exception returned by iterating over this"
@@ -36,7 +26,7 @@ class ExcInfo(TypedDict):
 
     exc_type: str
     exc_value: str
-    exc_msg: str
+    exc_msg: Nullable[str]
 
 
 class ErisErrorDict(TypedDict):
@@ -53,7 +43,7 @@ class ErisErrorDict(TypedDict):
 
     # optional traceback stack + exception that caused it
     stack: List[str]
-    caused_by: Nullable[List[ExcInfoTuple]]
+    caused_by: Nullable[List[ExcInfo]]
 
 
 class ErisError(Exception):
@@ -109,7 +99,7 @@ class ErisError(Exception):
         """
         result = []
         last_stack: Optional[List[str]] = None
-        last_caused_by: Optional[List[ExcInfoTuple]] = None
+        last_caused_by: Optional[List[ExcInfo]] = None
         for error in self:
             if isinstance(error, ErisError):
                 caused_by = last_caused_by = []
@@ -136,11 +126,11 @@ class ErisError(Exception):
 
                 # extend the last Error's 'caused_by' list with this
                 # Exception's info...
-                exc_info_tuple: ExcInfoTuple = (
-                    repr(type(error)),
-                    repr(error),
-                    str(error.args[0]) if error.args else NULL,
-                )
+                exc_info_tuple: ExcInfo = {
+                    "exc_type": repr(type(error)),
+                    "exc_value": repr(error),
+                    "exc_msg": str(error.args[0]) if error.args else NULL,
+                }
                 last_caused_by.append(exc_info_tuple)
 
                 # extend the stack by using lines from this Exception's

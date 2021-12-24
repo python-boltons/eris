@@ -7,10 +7,18 @@ log errors in Python.
 import logging as _logging
 
 from ._errors import ErisError, ErisErrorChain, ErisErrorDict
-from ._result import Err, LazyResult, Ok, Result, return_lazy_result
+from ._result import (
+    AbstractResult,
+    Err,
+    LazyResult,
+    Ok,
+    Result,
+    return_lazy_result,
+)
 
 
 __all__ = [
+    "AbstractResult",
     "ErisError",
     "ErisErrorChain",
     "ErisErrorDict",
