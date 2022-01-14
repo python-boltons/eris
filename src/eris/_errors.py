@@ -3,11 +3,23 @@
 from __future__ import annotations
 
 import traceback
-from typing import Final, Iterator, List, Literal, Optional, TypedDict, Union
+from typing import (
+    Final,
+    Iterator,
+    List,
+    Literal,
+    Optional,
+    TypedDict,
+    TypeVar,
+    Union,
+)
 
 from ion import efill
 from metaman import Inspector, cname
-from typist import E, T
+
+
+Exc_T = TypeVar("Exc_T", bound=Exception)
+T = TypeVar("T")
 
 
 Null = Literal["null"]
@@ -141,7 +153,7 @@ class ErisError(Exception):
         return result
 
 
-def _chain_errors(e1: E, e2: Optional[Exception]) -> E:
+def _chain_errors(e1: Exc_T, e2: Optional[Exception]) -> Exc_T:
     """Chain two exceptions together.
 
     This is the functional equivalent to ``raise e1 from e2``.
