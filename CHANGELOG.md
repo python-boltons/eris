@@ -9,9 +9,16 @@ The format is based on [Keep a Changelog], and this project adheres to
 [Semantic Versioning]: https://semver.org/
 
 
-## [Unreleased](https://github.com/python-boltons/eris/compare/0.2.2...HEAD)
+## [Unreleased](https://github.com/python-boltons/eris/compare/0.2.3...HEAD)
 
 No notable changes have been made.
+
+
+## [0.2.3](https://github.com/python-boltons/eris/compare/0.2.2...0.2.3) - 2022-01-13
+
+### Added
+
+* Add `eris.ErisResult` type.
 
 
 ## [0.2.2](https://github.com/python-boltons/eris/compare/0.2.1...0.2.2) - 2021-12-24

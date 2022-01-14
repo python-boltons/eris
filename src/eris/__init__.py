@@ -9,6 +9,7 @@ import logging as _logging
 from ._errors import ErisError, ErisErrorChain, ErisErrorDict
 from ._result import (
     AbstractResult,
+    ErisResult,
     Err,
     LazyResult,
     Ok,
@@ -22,6 +23,7 @@ __all__ = [
     "ErisError",
     "ErisErrorChain",
     "ErisErrorDict",
+    "ErisResult",
     "Err",
     "LazyResult",
     "Ok",

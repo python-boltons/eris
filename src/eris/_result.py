@@ -226,6 +226,8 @@ class Err(AbstractResult[T, E]):
 # influenced by that used by the Rust programming language
 # (see https://doc.rust-lang.org/book/ch09-00-error-handling.html).
 Result = Union[Ok[T, E], Err[T, E]]
+# Conveiniance type (e.g. ErisResult[str] and Result[str, ErisError])
+ErisResult = Result[T, ErisError]
 
 
 def return_lazy_result(
